@@ -53,11 +53,11 @@ class FraudDetection
         for($i=1;$i<=9;$i++){
             if($response->adjustForBigSet === true){
                 // @todo On some big sets the distribution seems to slighly change, I should account for that here...
+                //$response->benfordsDistribution[$i] = log10(1 + 1 / $i) *  $response->setCount; // needs attention.
                 $response->benfordsDistribution[$i] = round((log10($i + 1) - log10($i)) * 100, 2);
             }else{
                 $response->benfordsDistribution[$i] = round((log10($i + 1) - log10($i)) * 100, 2);
             }
-//            $expectedCounts[$i] = log10(1 + 1 / $i) * $total;
 
             $response->percentiles[$i] = round(($response->counts[$i] / $response->setCount) * 100, 2);
             $response->chiSquared += pow($response->percentiles[$i] - $response->benfordsDistribution[$i], 2) / $response->benfordsDistribution[$i];

@@ -25,15 +25,15 @@ class FraudController extends Controller
     {
         // @todo Using a html form data now, I would prefer json.
         $post=$request->post();
-        $params = ["test_set" => json_decode($post["test_set"])]; // @todo skipped validation
+        $params = [
+            "test_set" => json_decode($post["test_set"])
+        ]; // @todo skipped validation
+
         if(isset($post['threshold'])){
             $params["threshold"] = (float) $post["threshold"];
         }
-        if($post["adjust_for_big_set"] ?? 'no' === 'yes'){
-            $params["adjust_for_big_set"] = true;
-        }else{
-            $params["adjust_for_big_set"] = false;
-        }
+        $params["adjust_for_big_set"] = $post["adjust_for_big_set"] ?? 'no' === 'yes';
+
         return response()->json(FraudDetection::isBenford(...$params), options: JSON_PRETTY_PRINT);
     }
 }
