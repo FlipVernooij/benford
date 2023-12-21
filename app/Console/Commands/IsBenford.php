@@ -12,14 +12,14 @@ class IsBenford extends Command
      *
      * @var string
      */
-    protected $signature = 'app:is-benford {json_test_set} {--threshold=} {--adjust_for_big_set} ';
+    protected $signature = 'app:is-benford {json_test_set} {--threshold=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Verifies if a set of numbers complies to Bendords law.';
+    protected $description = 'Verifies if a set of numbers complies to Benfords law.';
 
     /**
      * Execute the console command.
@@ -27,14 +27,32 @@ class IsBenford extends Command
     public function handle() : int
     {
         $params= [
-            "test_set" => json_decode($this->argument("json_test_set")),
-            "adjust_for_big_set" => $this->option("adjust_for_big_set")
+            "test_set" => json_decode($this->argument("json_test_set"))
         ];
         if(!is_null($this->option("threshold"))){
-            $params["threshold"] = (float) $this->option("threshold"); # @todo unvalidated float cast
+            $params["threshold"] = (float) $this->option("threshold");
+        }
+        if($this->validate($params) === false){
+            return 22; // == invalid argument.
         }
         $response = FraudDetection::isBenford(...$params);
         echo $response;
-        return 1; // is this correct, assuming it is the return code.
+        if($response->isPureBenford === true){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    protected function validate(array $params): bool{
+        foreach($params["test_set"] as $value){
+            if(is_numeric($value) === false){
+                return false;
+            }
+        }
+        if(is_float($params["threshold"] ?? 0.0) === false){
+            return false;
+        }
+        return true;
     }
 }

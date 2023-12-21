@@ -8,7 +8,7 @@ I created a helper method in:
 
 With the helper I created a command:
 ```
-sail php artisan app:is-benford "[1,2,....]" --threshold=.15 --adjust_for_big_set
+sail php artisan app:is-benford "[1,2,....]" --threshold=.15 
 ```
 An API GET endpoint, documenting the requirements for the POST request.
 ```
@@ -22,6 +22,5 @@ And and perhaps the easiest, a simple webpage posting data to the api.
 
 ```http://localhost/```
 
-## @todo's
-I add multiple todo's mainly within the Helper method, all points of improvement.
-I also created an BenfordResponse object, I might want to refactor that a little if the implementations would become more clear.
+# Unittesting
+I thought about writing some unittest but current implementation is so  that a unittest doesn't really add anything.

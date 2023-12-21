@@ -7,6 +7,7 @@
     <title>Laravel</title>
     <script>
         generateRandomSet = function(count){
+            document.getElementById('json').value="Loading";
             /// This always fails due to Javascripts?OSX?Chrome's randomizer.
             const data = []
             for (let i = 0; i < count; i++) {
@@ -25,6 +26,7 @@
         }
 
         const generateBenfordsLawData = function (count) {
+            document.getElementById('json').value="Loading";
             const generateFirstDigit = function() {
                 // Javascript's random function (at-least on osx/chrome) will eventually always equal the distribution of digits.
                 //    As so a Javacript number comming from random will never comply to benfords law.
@@ -72,8 +74,8 @@
                     <textarea name="test_set" id="json"></textarea>
                 </dd>
                 <dd>
-                    <button type="button" onclick="generateRandomSet(1947591)">Generate non matching set</button>
-                    <button type="button" onclick="generateBenfordsLawData(1947591)">Generate matching set</button>
+                    <button type="button" onclick="generateRandomSet(1047591)">Generate non matching set</button>
+                    <button type="button" onclick="generateBenfordsLawData(1047591)">Generate matching set</button>
                     <br />
                     <small>These buttons create about 1.000.000 records, it takes a few seconds.</small>
                 </dd>
@@ -82,12 +84,6 @@
                 </dt>
                 <dd>
                     <input type="number" step="0.01" min="0" name="threshold" value=".15" />
-                </dd>
-                <dt>
-                    Adjust for big data set
-                </dt>
-                <dd>
-                    <input type="checkbox" name="adjust_for_big_set" value="yes">
                 </dd>
                 <dt>
                     Submit
